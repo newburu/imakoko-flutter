@@ -45,7 +45,6 @@ class _TopPageState extends State<TopPage> {
                 enabled: true,
                 // 入力数
                 maxLength: 10,
-                maxLengthEnforced: true,
                 style: TextStyle(color: Colors.black),
                 obscureText: false,
                 maxLines: 1,
@@ -58,7 +57,7 @@ class _TopPageState extends State<TopPage> {
                 },
               ),
             ),
-            new RaisedButton(
+            new ElevatedButton(
               child: Text("現在地参照"),
               onPressed: () {
                 Navigator.push(
