@@ -79,7 +79,8 @@ class _MapPageState extends State<MapPage> {
   Future<LatLng> _getLastLocation(String accessKey) async {
     LatLng lastLocation;
     var url = Uri.parse(
-        'http://10.0.2.2:3000/api/v1/users/last_location?code=' + accessKey);
+        'https://imakoko-map.herokuapp.com/api/v1/users/last_location?code=' +
+            accessKey);
     var response = await http.get(url);
     if (response.statusCode == 200) {
       var jsonResponse =
