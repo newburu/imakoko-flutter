@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:imakoko/my_shared_preferences.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -61,5 +62,6 @@ class SettingsPageState extends State<SettingsPage> {
       _reloadValue = value;
     });
     _prefs.setBool(reload_key, value);
+    MySharedPreferences.instance.setStringValue(reload_key, value.toString());
   }
 }
