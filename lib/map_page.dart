@@ -4,19 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
+import 'package:imakoko/my_shared_preferences.dart';
 
 class MapPage extends StatefulWidget {
   @override
   _MapPageState createState() => _MapPageState();
 
+  final String accessKey;
   MapPage(this.accessKey);
-  String accessKey;
 }
 
 class _MapPageState extends State<MapPage> {
-  String accessKey;
+  String _accessKey;
   Completer<GoogleMapController> _controller = Completer();
   Set<Marker> _markers = {};
+
+  bool _autoReload;
 
   static final CameraPosition _kNSK = CameraPosition(
     target: LatLng(34.84073380456741, 134.69371382221306),
@@ -26,7 +29,13 @@ class _MapPageState extends State<MapPage> {
   @override
   void initState() {
     super.initState();
-    accessKey = widget.accessKey;
+    _accessKey = widget.accessKey;
+
+    MySharedPreferences.instance
+        .getStringValue("reload_key")
+        .then((value) => setState(() {
+              _autoReload = (value == "true");
+            }));
   }
 
   @override
@@ -45,13 +54,13 @@ class _MapPageState extends State<MapPage> {
         ),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () async {
-            await _goToLastLocation(accessKey);
+            await _goToLastLocation(_accessKey);
             Marker marker = await _markerLastLocation(widget.accessKey);
             setState(() {
               _markers.add(marker);
             });
           },
-          label: Text('更新'),
+          label: Text('更新:' + _autoReload.toString()),
         ));
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:imakoko/map_page.dart';
+import 'package:imakoko/settings_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -34,6 +35,35 @@ class _TopPageState extends State<TopPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            DrawerHeader(
+              child: Text(
+                'イマココ',
+                style: TextStyle(
+                  fontSize: 24,
+                  color: Colors.white,
+                ),
+              ),
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+            ),
+            ListTile(
+              title: Text('設定'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SettingsPage(),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
       body: Center(
         child: Column(
