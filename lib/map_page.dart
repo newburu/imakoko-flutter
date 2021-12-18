@@ -36,6 +36,26 @@ class _MapPageState extends State<MapPage> {
         .then((value) => setState(() {
               _autoReload = (value == "true");
             }));
+
+    Timer.periodic(
+      Duration(seconds: 10),
+      _updateLocationTimer,
+    );
+  }
+
+  void _updateLocationTimer(Timer timer) {
+    print(_autoReload);
+    if (_autoReload) {
+      _updateLocation();
+    }
+  }
+
+  Future<void> _updateLocation() async {
+    await _goToLastLocation(_accessKey);
+    Marker marker = await _markerLastLocation(widget.accessKey);
+    setState(() {
+      _markers.add(marker);
+    });
   }
 
   @override
@@ -53,12 +73,8 @@ class _MapPageState extends State<MapPage> {
           },
         ),
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () async {
-            await _goToLastLocation(_accessKey);
-            Marker marker = await _markerLastLocation(widget.accessKey);
-            setState(() {
-              _markers.add(marker);
-            });
+          onPressed: () {
+            _updateLocation();
           },
           label: Text('更新:' + _autoReload.toString()),
         ));
