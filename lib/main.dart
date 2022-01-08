@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:imakoko/map_page.dart';
+import 'package:imakoko/organizer_page.dart';
 import 'package:imakoko/settings_page.dart';
 
 void main() {
@@ -86,6 +87,17 @@ class _TopPageState extends State<TopPage> {
                   accessKey = value;
                 },
               ),
+            ),
+            new ElevatedButton(
+              child: Text("主催者用"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => OrganizerPage(accessKey),
+                  ),
+                );
+              },
             ),
             new ElevatedButton(
               child: Text("現在地参照"),
